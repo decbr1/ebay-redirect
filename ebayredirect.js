@@ -13,7 +13,13 @@ function runPopup() {
 function runContentScript() {
     browser.storage.local.get("enabled").then(({ enabled }) => {
         if (enabled === false) return;
-        window.location.replace("https://ebay.co.uk/" + window.location.href.split("ebay.com/")[1]);
+        if (sessionStorage.getItem("ebayredirect_declined")) return;
+
+        if (confirm("from ebayredirect extension\n\nyou are on ebay.com!\nclick 'okay' to redirect to ebay.co.uk\nclick 'cancel' to stay on ebay.com")) {
+            window.location.replace("https://ebay.co.uk/" + window.location.href.split("ebay.com/")[1]);
+        } else {
+            sessionStorage.setItem("ebayredirect_declined", "true");
+        }
     });
 }
 
