@@ -21,8 +21,14 @@ function runContentScript() {
         if (enabled === false) return;
         if (sessionStorage.getItem("ebayredirect_declined")) return;
 
+        if (location.hostname !== "www.ebay.com") {
+            alert("youre on " + location.hostname + " right now so you're probably signing in or something.\nwont redirect to be safe.");
+            return;
+        }
+
+        const path = location.href.split("ebay.com/")[1] ?? "";
         if (confirm("from ebayredirect extension\n\nyou are on ebay.com!\nclick 'okay' to redirect to ebay.co.uk\nclick 'cancel' to stay on ebay.com")) {
-            window.location.replace("https://ebay.co.uk/" + window.location.href.split("ebay.com/")[1]);
+            window.location.replace("https://ebay.co.uk/" + path);
         } else {
             sessionStorage.setItem("ebayredirect_declined", "true");
         }
