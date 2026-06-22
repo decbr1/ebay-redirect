@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Ebay Redirect",
+  "version": "0.0.1",
+
+  "description": "Redirects you from ebay.com to ebay.co.uk.",
+
+  "icons": {
+
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ebayredirect@diaduck.xyz",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.ebay.com/*"],
+      "js": ["ebayredirect.js"]
+    }
+  ]
+}
