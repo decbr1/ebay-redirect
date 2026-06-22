@@ -1,9 +1,24 @@
-const url = window.location.href
+function runPopup() {
+    const toggle = document.getElementById("toggle");
 
-if (confirm("from ebayredirect extension\n\nyou are on ebay.com!\nclick 'okay' to redirect to ebay.co.uk\nclick 'cancel' to stay on ebay.com")) {
-    window.location.replace("https://ebay.co.uk/" + url.split("ebay.com/")[1]);
-} else {
-    // pass
+    browser.storage.local.get("enabled").then(({ enabled }) => {
+        toggle.checked = enabled !== false; // default on
+    });
+
+    toggle.addEventListener("change", () => {
+        browser.storage.local.set({ enabled: toggle.checked });
+    });
 }
 
-// todo remember for this session.
+function runContentScript() {
+    browser.storage.local.get("enabled").then(({ enabled }) => {
+        if (enabled === false) return;
+        window.location.replace("https://ebay.co.uk/" + window.location.href.split("ebay.com/")[1]);
+    });
+}
+
+if (document.getElementById("toggle")) {
+    runPopup();
+} else {
+    runContentScript();
+}
