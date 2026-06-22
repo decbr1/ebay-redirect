@@ -6,7 +6,7 @@
   "description": "Redirects you from ebay.com to ebay.co.uk.",
 
   "icons": {
-
+    "48": "icons/uk48.png"
   },
 
   "browser_specific_settings": {

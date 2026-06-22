@@ -1,12 +1,18 @@
+function setIcon(enabled) {
+    browser.action.setIcon({ path: enabled !== false ? "icons/uk48.png" : "icons/usa48.png" });
+}
+
 function runPopup() {
     const toggle = document.getElementById("toggle");
 
     browser.storage.local.get("enabled").then(({ enabled }) => {
         toggle.checked = enabled !== false; // default on
+        setIcon(toggle.checked);
     });
 
     toggle.addEventListener("change", () => {
         browser.storage.local.set({ enabled: toggle.checked });
+        setIcon(toggle.checked);
     });
 }
 
@@ -24,7 +30,7 @@ function runContentScript() {
 }
 
 if (document.getElementById("toggle")) {
-    runPopup();
+    runPopup(); // in the popup.html context
 } else {
-    runContentScript();
+    runContentScript(); // on ebay
 }
