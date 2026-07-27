@@ -14,4 +14,5 @@ Thanks eBay!
 
 ---
 
-currently supports firefox.
+currently supports firefox only. \
+https://addons.mozilla.org/en-GB/firefox/addon/ebay-redirect/
